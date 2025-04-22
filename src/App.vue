@@ -6,7 +6,11 @@
         
         <MyList :todos="todos" :checkToDoDone="checkToDoDone" :deleteToDo="deleteToDo" />
 
-        <MyFooter/>
+        <MyFooter 
+          :todos="todos" 
+          :checkAllToDo="checkAllToDo" 
+          :clearAllToDo="clearAllToDo"
+        />
 
       </div>
     </div>
@@ -52,6 +56,16 @@ export default {
     // 删除一个 ToDo
     deleteToDo(id) {
       this.todos = this.todos.filter(todo => todo.id !== id)
+    },
+    // 全选、全不选
+    checkAllToDo(done) {
+      this.todos.forEach(todo => {
+        todo.done = done
+      })
+    },
+    // 清除已完成任务
+    clearAllToDo() {
+      this.todos = this.todos.filter(todo => !todo.done)
     }
 
   }
