@@ -2,9 +2,9 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        <MyHeader/>
+        <MyHeader :addToDo="addToDo"/>
         
-        <MyList/>
+        <MyList :todos="todos" :checkToDoDone="checkToDoDone" :deleteToDo="deleteToDo" />
 
         <MyFooter/>
 
@@ -24,6 +24,36 @@ export default {
     MyHeader,
     MyFooter,
     MyList
+  },
+  data() {
+    return {
+      todos: [
+        {id: '001', title: '吃饭', done: false},
+        {id: '002', title: '学习', done: true},
+        {id: '003', title: '打游戏', done: false},
+      ]
+    }
+  },
+  methods: {
+    // 添加一个 ToDo
+    addToDo(todoObj) {
+      this.todos.unshift(todoObj)
+    },
+    // 勾选、取消勾选
+    checkToDoDone(id) {
+      // 1. 找到对应的 todo
+      this.todos.forEach((todo => {
+        if (todo.id === id) {
+          // 2. 取反 done 值
+          todo.done = !todo.done
+        }
+      }))
+    },
+    // 删除一个 ToDo
+    deleteToDo(id) {
+      this.todos = this.todos.filter(todo => todo.id !== id)
+    }
+
   }
 }
 </script>
